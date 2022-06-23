@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import themeContext from "../context/theme";
+import { useTodos } from "../context/todoContext";
 
 function Button({ text, className, ...props }) {
-  const theme = useContext(themeContext);
+  const { theme } = useTodos();
 
   return (
     <button

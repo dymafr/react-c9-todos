@@ -1,9 +1,16 @@
 import Button from "./Button";
+import { useTodoDispatcher } from "../context/todoContext";
 
-function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
+function TodoItem({ todo }) {
+  const dispatch = useTodoDispatcher();
   return (
     <li
-      onClick={selectTodo}
+      onClick={() =>
+        dispatch({
+          type: "SELECT_TODO",
+          id: todo.id,
+        })
+      }
       className={`mb-10 d-flex flex-row justify-content-center align-items-center p-10 ${
         todo.selected ? "selected" : ""
       }  `}
@@ -14,7 +21,10 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
       <Button
         onClick={(e) => {
           e.stopPropagation();
-          toggleTodo();
+          dispatch({
+            type: "TOGGLE_TODO",
+            id: todo.id,
+          });
         }}
         className="mr-15"
         text="Valider"
@@ -22,7 +32,10 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
       <Button
         onClick={(e) => {
           e.stopPropagation();
-          editTodo();
+          dispatch({
+            type: "TOGGLE_EDIT_TODO",
+            id: todo.id,
+          });
         }}
         className="mr-15"
         text="Modifier"
@@ -30,7 +43,10 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
       <Button
         onClick={(e) => {
           e.stopPropagation();
-          deleteTodo();
+          dispatch({
+            type: "DELETE_TODO",
+            id: todo.id,
+          });
         }}
         text="Supprimer"
       />

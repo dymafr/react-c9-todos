@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Button from "./Button";
+import { useTodoDispatcher } from "../context/todoContext";
 
-function EditTodo({ todo, editTodo, cancelEditTodo }) {
+function EditTodo({ todo }) {
+  const dispatch = useTodoDispatcher();
   const [value, setValue] = useState(todo.content);
 
   function handleChange(e) {
@@ -11,14 +13,22 @@ function EditTodo({ todo, editTodo, cancelEditTodo }) {
 
   function handleKeyDown(e) {
     if (e.code === "Enter" && value.length) {
-      editTodo(value);
+      dispatch({
+        type: "EDIT_TODO",
+        id: todo.id,
+        content: value,
+      });
       setValue("");
     }
   }
 
   function handleClick() {
     if (value.length) {
-      editTodo(value);
+      dispatch({
+        type: "EDIT_TODO",
+        id: todo.id,
+        content: value,
+      });
       setValue("");
     }
   }
@@ -33,7 +43,16 @@ function EditTodo({ todo, editTodo, cancelEditTodo }) {
         placeholder="Ajouter une todo"
         className="mr-15 flex-fill"
       />
-      <Button onClick={cancelEditTodo} className="mr-15" text="Annuler" />
+      <Button
+        onClick={() =>
+          dispatch({
+            type: "TOGGLE_EDIT_TODO",
+            id: todo.id,
+          })
+        }
+        className="mr-15"
+        text="Annuler"
+      />
       <Button onClick={handleClick} text="Sauvegarder" />
     </div>
   );
