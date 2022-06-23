@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
   return (
     <li
@@ -9,33 +11,29 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo, selectTodo }) {
       <span className="flex-fill mr-15">
         {todo.content} {todo.done && "( ✓ )"}{" "}
       </span>
-      <button
+      <Button
         onClick={(e) => {
           e.stopPropagation();
           toggleTodo();
         }}
-        className="btn btn-primary mr-15"
-      >
-        Valider
-      </button>
-      <button
+        className="mr-15"
+        text="Valider"
+      />
+      <Button
         onClick={(e) => {
           e.stopPropagation();
           editTodo();
         }}
-        className="btn btn-primary mr-15"
-      >
-        Modifier
-      </button>
-      <button
+        className="mr-15"
+        text="Modifier"
+      />
+      <Button
         onClick={(e) => {
           e.stopPropagation();
           deleteTodo();
         }}
-        className="btn btn-reverse-primary mr-15"
-      >
-        Supprimer
-      </button>
+        text="Supprimer"
+      />
     </li>
   );
 }

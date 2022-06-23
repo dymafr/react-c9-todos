@@ -1,96 +1,88 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
+import themeContext from "./context/theme";
+import todoReducer from "./reducers/todoReducer";
 
 function App() {
-  const [todoList, setTodoList] = useState([]);
+  const [state, dispatch] = useReducer(todoReducer, {
+    theme: "primary",
+    todoList: [],
+  });
 
   function addTodo(content) {
-    const todo = {
-      id: crypto.randomUUID(),
+    dispatch({
+      type: "ADD_TODO",
       content,
-      done: false,
-      edit: false,
-      selected: false,
-    };
-    setTodoList([...todoList, todo]);
+    });
   }
 
   function deleteTodo(id) {
-    setTodoList(todoList.filter((todo) => todo.id !== id));
+    dispatch({
+      type: "DELETE_TODO",
+      id,
+    });
   }
 
   function toggleTodo(id) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo.id === id
-          ? {
-              ...todo,
-              done: !todo.done,
-            }
-          : todo
-      )
-    );
+    dispatch({
+      type: "TOGGLE_TODO",
+      id,
+    });
   }
 
   function toggleTodoEdit(id) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo.id === id
-          ? {
-              ...todo,
-              edit: !todo.edit,
-            }
-          : todo
-      )
-    );
+    dispatch({
+      type: "TOGGLE_EDIT_TODO",
+      id,
+    });
   }
 
   function editTodo(id, content) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo.id === id
-          ? {
-              ...todo,
-              edit: false,
-              content,
-            }
-          : todo
-      )
-    );
+    dispatch({
+      type: "EDIT_TODO",
+      id,
+      content,
+    });
   }
 
   function selectTodo(id) {
-    setTodoList(
-      todoList.map((todo) =>
-        todo.id === id
-          ? {
-              ...todo,
-              selected: true,
-            }
-          : {
-              ...todo,
-              selected: false,
-            }
-      )
-    );
+    dispatch({
+      type: "SELECT_TODO",
+      id,
+    });
+  }
+
+  function handleChange(e) {
+    dispatch({
+      type: "SET_THEME",
+      theme: e.target.value,
+    });
   }
 
   return (
-    <div className="d-flex flex-row justify-content-center align-items-center p-20">
-      <div className="card container p-20">
-        <h1 className="mb-20">Todo list</h1>
-        <AddTodo addTodo={addTodo} />
-        <TodoList
-          todoList={todoList}
-          deleteTodo={deleteTodo}
-          toggleTodo={toggleTodo}
-          toggleTodoEdit={toggleTodoEdit}
-          editTodo={editTodo}
-          selectTodo={selectTodo}
-        />
+    <themeContext.Provider value={state.theme}>
+      <div className="d-flex flex-row justify-content-center align-items-center p-20">
+        <div className="card container p-20">
+          <h1 className="mb-20 d-flex flex-row justify-content-center align-items-center">
+            <span className="flex-fill">Todo list</span>
+            <select value={state.theme} onChange={handleChange}>
+              <option value="primary">Rouge</option>
+              <option value="secondary">Bleu</option>
+            </select>
+          </h1>
+          <AddTodo addTodo={addTodo} />
+          <TodoList
+            todoList={state.todoList}
+            deleteTodo={deleteTodo}
+            toggleTodo={toggleTodo}
+            toggleTodoEdit={toggleTodoEdit}
+            editTodo={editTodo}
+            selectTodo={selectTodo}
+          />
+        </div>
       </div>
-    </div>
+    </themeContext.Provider>
   );
 }
 
