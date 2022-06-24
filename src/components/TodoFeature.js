@@ -1,4 +1,4 @@
-import { useTodoDispatcher, useTodos } from "../context/todoContext";
+import { useTodoDispatcher, useTodos } from "../context/TodoContext";
 import AddTodo from "./AddTodo";
 import TodoList from "./TodoList";
 

@@ -1,5 +1,5 @@
 import Button from "./Button";
-import { useTodoDispatcher } from "../context/todoContext";
+import { useTodoDispatcher } from "../context/TodoContext";
 
 function TodoItem({ todo }) {
   const dispatch = useTodoDispatcher();

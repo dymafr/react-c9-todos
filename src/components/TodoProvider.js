@@ -1,7 +1,7 @@
 import { useReducer } from "react";
-import themeContext from "../context/theme";
-import { todoStateContext } from "../context/todoContext";
-import { todoDispatcherContext } from "../context/todoContext";
+import ThemeContext from "../context/ThemeContext";
+import { TodoStateContext } from "../context/TodoContext";
+import { TodoDispatcherContext } from "../context/TodoContext";
 import todoReducer from "../reducers/todoReducer";
 
 function TodoProvider({ children }) {
@@ -11,13 +11,13 @@ function TodoProvider({ children }) {
   });
 
   return (
-    <todoStateContext.Provider value={state}>
-      <todoDispatcherContext.Provider value={dispatch}>
-        <themeContext.Provider value={state.theme}>
+    <TodoStateContext.Provider value={state}>
+      <TodoDispatcherContext.Provider value={dispatch}>
+        <ThemeContext.Provider value={state.theme}>
           {children}
-        </themeContext.Provider>
-      </todoDispatcherContext.Provider>
-    </todoStateContext.Provider>
+        </ThemeContext.Provider>
+      </TodoDispatcherContext.Provider>
+    </TodoStateContext.Provider>
   );
 }
 

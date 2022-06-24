@@ -1,4 +1,4 @@
-import { useTodos } from "../context/todoContext";
+import { useTodos } from "../context/TodoContext";
 
 function Button({ text, className, ...props }) {
   const { theme } = useTodos();

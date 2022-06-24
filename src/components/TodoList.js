@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 import EditTodo from "./EditTodo";
-import { useTodos } from "../context/todoContext";
+import { useTodos } from "../context/TodoContext";
 
 function TodoList() {
   const state = useTodos();

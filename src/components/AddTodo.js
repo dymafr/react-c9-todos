@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTodoDispatcher } from "../context/todoContext";
+import { useTodoDispatcher } from "../context/TodoContext";
 import Button from "./Button";
 
 function AddTodo() {
